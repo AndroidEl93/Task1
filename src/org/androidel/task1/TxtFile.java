@@ -2,6 +2,7 @@ package org.androidel.task1;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -107,6 +108,41 @@ class TxtFile {
                 }
             } catch (IOException e) {
                 System.out.println("Ошибка чтения файла \"" + txtFile.name + "\" (" + e.getMessage() + ")");
+            }
+        }
+    }
+
+    /**
+     * Проверка списка файлов на наличие циклической зависимости
+     * @param list Проверяемый список
+     * @throws Exception При нахождении циклической зависимости, создается исключение
+     */
+    static void checkCyclic(LinkedList<TxtFile> list) throws Exception {
+        for (TxtFile file : list) {
+            checkCyclicNext(new ArrayList<>(), file);
+        }
+    }
+
+    /**
+     * Функция для рекурсивного обхода списка файлов в поиске циклических зависимостей
+     * @param prevPath Проделанный путь обхода
+     * @param file Текущий файл обхода
+     * @throws Exception При нахождении циклической зависимости, создается исключение
+     */
+    private static void checkCyclicNext(ArrayList<TxtFile> prevPath, TxtFile file) throws Exception {
+        ArrayList<TxtFile> path = new ArrayList<>(prevPath);
+        if (path.contains(file)) {//Если в проделанном пути уже есть текущий файл, создаем исключение
+            StringBuilder exception = new StringBuilder();
+            exception.append("Найдена циклическая зависимость, цикл зависимости: ");
+            for (TxtFile pathFile : path) {
+                exception.append(pathFile.name).append(" > ");
+            }
+            exception.append(file.name);
+            throw new Exception(exception.toString());
+        } else {//Если файл еще не встречался, добавляем его в проделанный путь и проверяем зависимые файлы
+            path.add(file);
+            for (TxtFile require : file.required) {
+                checkCyclicNext(path, require);
             }
         }
     }

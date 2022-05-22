@@ -28,5 +28,12 @@ public class Main {
 
         //Поиск зависимостей
         TxtFile.searchRequired(files);
+
+        try {
+            //Поиск циклических зависимостей в файлах
+            TxtFile.checkCyclic(files);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
