@@ -148,6 +148,26 @@ class TxtFile {
     }
 
     /**
+     * Функция возвращает отсортированый с учетом зависимостей список файлов
+     * @param list Исходный список
+     * @return Отсортированый список
+     */
+    static LinkedList<TxtFile> sortByRequired(LinkedList<TxtFile> list) {
+        LinkedList<TxtFile> result = new LinkedList<>(list);
+        for (TxtFile file : list) {
+            for (TxtFile require : file.required) {
+                int a = result.indexOf(file);
+                int b = result.indexOf(require);
+                if (a < b) {
+                    result.remove(b);
+                    result.add(a, require);
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
      * Функция возвращает имя файла (Необходима для сортировки файлов по имени)
      * @return Имя файла
      */
