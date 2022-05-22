@@ -1,5 +1,6 @@
 package org.androidel.task1;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -21,5 +22,11 @@ public class Main {
         LinkedList<TxtFile> files = TxtFile.getTxtFileNames(folder);
         System.out.println("Найденые текстовые файлы:");
         TxtFile.printList(files);
+
+        //Сортировка файлов по имени
+        files.sort(Comparator.comparing(TxtFile::getName));
+
+        //Поиск зависимостей
+        TxtFile.searchRequired(files);
     }
 }
