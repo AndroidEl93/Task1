@@ -168,6 +168,23 @@ class TxtFile {
     }
 
     /**
+     * Объединение содержимого файлов из списка в один файл
+     * @param list Список файлов
+     * @param outFileName Имя итогового файла
+     */
+    static void getConcatenationFile(LinkedList<TxtFile> list, String outFileName) throws IOException {
+        FileOutputStream outStream = new FileOutputStream(outFileName);
+        for (TxtFile file : list) {
+            FileInputStream inStream = new FileInputStream(file.path);
+            while (inStream.available() > 0) {
+                outStream.write(inStream.read());
+            }
+            inStream.close();
+        }
+        outStream.close();
+    }
+
+    /**
      * Функция возвращает имя файла (Необходима для сортировки файлов по имени)
      * @return Имя файла
      */

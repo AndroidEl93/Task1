@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Main {
 
+    final static String OUT_FILE_NAME = "out.txt";
+
     public static void main(String[] args) {
         System.out.println("Задание #1");
 
@@ -38,6 +40,9 @@ public class Main {
             System.out.println("Отсортированные по имени и зависимостям файлы:");
             TxtFile.printList(sortFiles);
 
+            //Склейка файлов
+            TxtFile.getConcatenationFile(sortFiles, OUT_FILE_NAME);
+            System.out.println("Содержимое файлов из списка склеено в один текстовый файл: \"" + OUT_FILE_NAME + "\"");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
