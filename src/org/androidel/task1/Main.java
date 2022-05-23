@@ -15,7 +15,8 @@ public class Main {
         String folder = System.getProperty("user.dir") + "\\folder";
         System.out.println("Корневой каталог:" + folder);
         System.out.println("...Для продолжения нажмите ввод (или укажите другой каталог)...");
-        String input = new Scanner(System.in).nextLine();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
         if (input.length() > 0) {
             folder = input;
         }
@@ -46,5 +47,7 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("...Выполнение программы завершено, нажмите ввод для закрытия...");
+        scanner.nextLine();
     }
 }
